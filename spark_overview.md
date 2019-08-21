@@ -689,6 +689,39 @@ The goal of GraphX is to optimize the process by making it easier to view data b
 
 
 ### Module 05: Spark configuration,monitoring and tuning
+
+* Spark mode:
+    * run sp0ark in local mode
+    * scale computation by adding more spark nodes and running in cluster mode 
+
+* driver program (sparkContext)
+* cluster manager
+* Worker node (executor, cache, task)
+* 
+
+cluster manager:  
+    * hadoop yarn: a resource management and scheduling tool for a hadoop mapreduce cluster.
+    * apache mesos: Centralized fault-tolerant cluster manager and global resource manager for your entire data center.
+
+The cluster manager abstracts away the uncerlying cluster environment so that cyou can use the same unified high level spark api to write spark program wich can run on different clusters
+
+You can use spark-submit to submit an application to the cluster
+
+
+spark-submit:
+    * The suer submits an application using spark-submit.
+    * Spark-submit launchers the driver program and invokes the main method specified by the user.
+    * The driver program contacts the cluster manatger to ask for resources to start executors.
+    * The cluster manager launchers executors on behalf of the driver program.
+    * The driver process runs through the user application. Based on the RDD or dataframe operations in the program , the driver sends work to executors in the form of tasks.
+    * Tasks are run on execitor processes to compute and save results.
+    * If the driver's main method exits or ti calls ``SparkContext.stop()``, it will terminage the executors.
+    
+ .spark-submit \ --executor-memory 20G\ --total-executor-cores 100 \ path/to/example.py
+ 
+ 
+    
+
 5.1 Spark Cluster
 ```
 Three main components of a Spark cluster. 
@@ -713,6 +746,7 @@ Three main components of a Spark cluster.
     Because the driver program schedules tasks on the cluster, it should run close to the
     worker nodes on the same local network. If you like to send remote requests to the cluster,
     it is better to use a RPC and have it submit operations from nearby.
+
 ```
 
 5.3 Spark configuration

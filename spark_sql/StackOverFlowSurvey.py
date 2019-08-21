@@ -7,13 +7,15 @@ SALARY_MIDPOINT_BUCKET = "salary_midpoint_bucket"
 if __name__ == "__main__":
 
     session = SparkSession.builder.appName("StackOverFlowSurvey").getOrCreate()
-
+    sc = session.sparkContext
+    sc.setLogLevel('ERROR')
+    
     dataFrameReader = session.read
 
     responses = dataFrameReader \
         .option("header", "true") \
         .option("inferSchema", value = True) \
-        .csv("input_data/2016-stack-overflow-survey-responses.csv")
+        .csv("s3n://shubo-ml-data-files/stackoverflow_survey/2016_st_survey.csv")
 
     print("=== Print out schema ===")
     responses.printSchema()
